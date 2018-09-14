@@ -122,7 +122,7 @@
 > **lrem key count value**  
 > 从列表key中前count个数中删除值为value的元素  
 > count可以指定为正数或负数，区别是正数从左开始，负数从右开始  
-#集合类型命令  
+# 集合类型命令  
 > **sadd key member**  
 > 向集合key中添加member元素  
 > ***  
@@ -161,4 +161,29 @@
 > **zrangescore key stop start limit offsetr count**  
 > 两者命令效果相反
 > ***  
->
+# 事务  
+> ## 命令规范  
+> **multi**&nbsp;&nbsp;开启事务  
+> **.......**&nbsp;&nbsp;发送Redis命令  
+> **exec**&nbsp;&nbsp;执行事务  
+> ## 错误处理  
+> + 如果是命令语法错误，执行exec命令后，Redis会直接返回错误，事务中的一条命令都不执行  
+> + 如果是运行时错误，Redis会忽略运行时错误的命令，其余无错误的命令都会执行  
+> + Redis不支持事务回滚功能  
+# watch命令  
+> watch命令可以监控一个或多个键，一旦其中一个键在事务开始之前被修改，那么之后的事务就不会执行  
+# 过期时间命令  
+> **expire key seconds**  
+> 期望key键在seconds秒后过期(无效)  
+> ***  
+> **ttl key**  
+> 查看key键还有多少时间过期  
+> ***  
+> **persist**  
+> 取消key键的过期时间，注意set命令为键赋值也会清除键的过期时间  
+# 排序命令  
+> **sort key**  
+> 对列表类型，集合类型和有序集合进行排序  
+> 默认是从小到大排序,sort key desc可以从大到小  
+> 
+
