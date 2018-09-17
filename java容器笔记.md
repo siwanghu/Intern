@@ -5,11 +5,39 @@
 >  ## **1.容器框架**
 > ![图片](./data/container-structure.png)  
 >  
+> ![图片](./data/cc.PNG)  
+>  
 > Java 容器框架主要分为Collection和Map两种。其中，Collection又分为List、Set 、Queue    
 > + Collection：一个独立元素的序列，这些元素都服从一条或者多条规则  
 > + List：必须按照插入的顺序保存元素  
 > + Set：不能有重复的元素  
 > + Map：一组成对的“键值对”对象，允许你使用键来查找值  
+> ## **set**  
+> + TreeSet是采用树结构实现(红黑树算法)；元素是按顺序（不是插入顺序）进行排列，但是add()、remove()以及contains()等方法都是复杂度为O(log(n))。存入TreeMap的元素应当实现Comparable接口或者实现Comparator接口，会按照排序后的顺序迭代元素  
+>  
+> + HashSet是采用hash表来实现的。其中的元素没有按顺序排列，add()、remove()以及contains()等方法都是复杂度为O(1)  
+>  
+> + LinkedHashSet介于HashSet和TreeSet之间。它也是一个hash表，但是同时维护了一个双链表来记录插入的顺序。基本方法的复杂度为O(1)  
+>  
+> ## **Map**  
+> + HashMap：底层是哈希表数据结构，允许使用 null 值和 null 键，该集合是不同步的。(同步使用hashtable替代)  
+>  
+> + TreeMap：底层是二叉树(红黑树算法)数据结构。线程不同步。可以用于给map集合中的键进行排序存入TreeMap的元素应当实现Comparable接口或者实现Comparator接口，会按照排序后的顺序迭代元素  
+>  
+> ## **List**  
+> + ArrayList：数组，容量一大，频繁增删就是噩梦，适合随机查找  
+>  
+> + LinkedList：基于链表的数据结构  
+>  
+> + Vector：底层用数组实现的List，相关的方法都加了同步检查  
+>  
+> ## **String、StringBuilder、StringBuffer**  
+> + String为字符串常量，而StringBuilder和StringBuffer均为字符串变量，即String对象一旦创建之后该对象是不可更改的，但后两者的对象是变量，是可以更改的  
+>  
+> + 在线程安全上，StringBuilder是线程不安全的，而StringBuffer是线程安全的  
+>  
+> + String：适用于少量的字符串操作的情况；StringBuilder：适用于单线程下在字符缓冲区进行大量操作的情况；StringBuffer：适用多线程下在字符缓冲区进行大量操作的情况  
+>  
 # 同步容器  
 > + Vector 实现了 List 接口，Vector 实际上就是一个数组，和 ArrayList 类似，但是 Vector 中的方法都是 synchronized 方法，即进行了同步措施  
 >  
