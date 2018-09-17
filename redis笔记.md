@@ -1,4 +1,4 @@
-# Redis远程字典服务器  
+# Redis远程字典服务器（siwang.hu&nbsp;&nbsp;V1.0）  
 > 启动Redis&nbsp;&nbsp;**redis-server.exe redis.windows.conf**  
 > 远程登陆&nbsp;&nbsp; **redis-cli.exe -h 127.0.0.1 -p 6379**  
 > 停止Redis&nbsp;&nbsp; **redis-cli.exe shutdown**  

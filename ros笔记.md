@@ -1,4 +1,4 @@
-### Turtlebot学习笔记 create by siwanghu v1.0
+### Turtlebot学习笔记（siwang.hu&nbsp;&nbsp;V1.0)  
 # ROS安装  
 ## ubuntu14.04上安装ROS Indigo版本
 > **设置安装软件源**  
