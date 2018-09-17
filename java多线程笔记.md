@@ -125,15 +125,16 @@ public class CallableDemo {
 > + Thread.yield - 可以使用 Thread.yield() 方法将一个线程的操作暂时让给其他线程执行  
 >  
 # Java线程间通信  
-> *wait、notify、notifyAll 是 Object 类中的方法*  
+> ## **Object**
+> wait、notify、notifyAll 是 Object 类中的方法  
 > + wait - 线程自动释放其占有的对象锁，并等待 notify  
 > + notify - 唤醒一个正在 wait 当前对象锁的线程，并让它拿到对象锁  
 >  
 > + notifyAll - 唤醒所有正在 wait 前对象锁的线程  
-> ## **ThreadLocal**  
-> 线程本地变量，ThreadLocal 为变量在每个线程中都创建了一个副本，那么每个线程可以访问自己内部的副本变量  
 > ## **管道**  
 > 主要用于线程之间的数据传输，而传输的媒介为内存. 4 种具体实现：PipedOutputStream、PipedInputStream、PipedReader 和 PipedWriter，前两种面向字节，而后两种面向字符  
+>  
+> *ThreadLocal线程本地变量，ThreadLocal 为变量在每个线程中都创建了一个副本，那么每个线程可以访问自己内部的副本变量*  
 ```
 public class Piped {
 
@@ -174,4 +175,23 @@ public class Piped {
         }
     }
 }
-```
+```  
+# Java并发底层实现  
+> ## **1.synchronized**  
+> 关键字 synchronized 可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块  
+> **原理：**  
+> + 对于普通同步方法，锁是当前实例对象  
+> 造成其他的线程也无法调用当前类的其他同步方法  
+>  
+> + 对于静态同步方法，锁是当前类的 Class 对象  
+>  
+> + 对于同步方法块，锁是Synchonized 括号里配置的对象  
+> 同步方法块是细粒度的同步，推荐使用这种写法  
+> *注意：Java中的synchronized是可重入的，即一个线程得到一个对象锁后再次请求该对象锁，是永远可以拿到锁的*  
+> ## **2.volatile**  
+> volatile 是轻量级的 synchronized，它在多处理器开发中保证了共享变量的“可见性”  
+>  
+> 可见性的意思是当一个线程修改一个共享变量时，另外一个线程能读到这个修改的值  
+>  
+> 一旦一个共享变量（类的成员变量、类的静态成员变量）被 volatile 修饰之后，那么就具备了两层语义：保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的。禁止进行指令重排序。如果一个字段被声明成 volatile，Java 线程内存模型确保所有线程看到这个变量的值是一致的  
+> 
