@@ -23,6 +23,23 @@
 > + 饥饿：线程一直无法获得运行资源，导致一直没有运行  
 >  
 > + 上下文切换： CPU 从执行一个线程切换到执行另一个线程时，CPU 需要保存当前线程的本地数据，程序指针等状态，并加载下一个要执行的线程的本地数据，程序指针等  
+>  
+> + 公平锁：多个线程按照申请锁的顺序来获取锁  
+>  
+> + 非公平锁：多个线程获取锁的顺序并不是按照申请锁的顺序，有可能后申请的线程比先申请的线程优先获取锁(Synchronized是一种非公平锁)  
+>  
+> + 可重入锁：在同一个线程在外层方法获取锁的时候，在进入内层方法会自动获取锁(Synchronized是一个可重入锁)  
+>  
+> + 独享锁：指该锁一次只能被一个线程所持有  
+>  
+> + 共享锁：指该锁可被多个线程所持有  
+>  
+> + 互斥锁：独享锁具体实现，在Java中是ReentrantLock类  
+>  
+> + 读写锁：Java 中的具体实现就是ReadWriteLock  
+>  
+> + 自旋锁：自旋锁是指尝试获取锁的线程不会立即阻塞，而是采用循环的方式去尝试获取锁  
+>  
 > ## **2.进程与线程的区别**  
 >  
 > + 进程代表一个正在运行的程序  
@@ -194,4 +211,59 @@ public class Piped {
 > 可见性的意思是当一个线程修改一个共享变量时，另外一个线程能读到这个修改的值  
 >  
 > 一旦一个共享变量（类的成员变量、类的静态成员变量）被 volatile 修饰之后，那么就具备了两层语义：保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的。禁止进行指令重排序。如果一个字段被声明成 volatile，Java 线程内存模型确保所有线程看到这个变量的值是一致的  
-> 
+# Lock锁  
+> **synchronized缺陷**  
+> + 被synchronized修饰的方法或代码块，只能被一个线程访问。如果这个线程被阻塞，其他线程也只能等待
+>  
+> + synchronized 不能响应中断  
+>  
+> + synchronized 没有超时机制  
+>  
+> + synchronized 只能是非公平锁  
+>  
+> **Lock接口**  
+```
+public interface Lock {
+    void lock();
+    void lockInterruptibly() throws InterruptedException;
+    boolean tryLock();
+    boolean tryLock(long time, TimeUnit unit) throws InterruptedException;
+    void unlock();
+    Condition newCondition();
+}
+```  
+> + lock() 方法的作用是获取锁。如果锁已被其他线程获取，则进行等待  
+>  
+> + tryLock() 方法的作用是尝试获取锁，如果成功，则返回 true；如果失败（即锁已被其他线程获取），则返回 false。也就是说，这个方法无论如何都会立即返回，获取不到锁时不会一直等待  
+>  
+> + lockInterruptibly() 方法比较特殊，当通过这个方法去获取锁时，如果线程正在等待获取锁，则这个线程能够响应中断，即中断线程的等待状态。也就使说，当两个线程同时通过 lock.lockInterruptibly() 想获取某个锁时，假若此时线程 A 获取到了锁，而线程 B 只有在等待，那么对线程 B 调用 threadB.interrupt() 方法能够中断线程 B 的等待过程。  
+>*当一个线程获取了锁之后，是不会被 interrupt() 方法中断的。因为本身在前面的文章中讲过单独调用 interrupt() 方法不能中断正在运行过程中的线程，只能中断阻塞过程中的线程。因此当通过 lockInterruptibly() 方法获取某个锁时，如果不能获取到，只有进行等待的情况下，是可以响应中断的*  
+>  
+> + unlock() 方法的作用是释放锁  
+>  
+> ReentrantLock(可重入锁)是唯一实现了 Lock 接口的类  
+> **ReadWriteLock 和 ReentrantReadWriteLock**  
+> eadWriteLock 允许多个线程同时对其执行读操作，但是只允许一个线程对其执行写操作  
+>  
+> ReentrantReadWriteLock 实现了 ReadWriteLock 接口，所以它是一个读写锁  
+>  
+> **ReadWriteLock接口定义**  
+```
+public interface ReadWriteLock {
+    /**
+     * 返回用于读操作的锁
+     */
+    Lock readLock();
+
+    /**
+     * 返回用于写操作的锁
+     */
+    Lock writeLock();
+}
+```  
+# Java中的多线程同步手段  
+> + 同步方法  
+> + 同步代码块  
+> + 使用volatile变量  
+> + 可重入锁  
+> + 尽量使用局部变量  
