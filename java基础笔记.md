@@ -33,6 +33,30 @@ s1 += 1;
 ```  
 > +=是java语言中的运算符，Java编译器会对它特殊处理进行正确的编译  
 > 
+# equals与hashcode  
+> + equals方法用于比较两个对象是否相等，比较的是对象的值(==比较的是对象引用)  
+> + hashcode方法为对象生成唯一的哈希码  
+>  
+> *hashcode的作用是当对象放入HashTable，HashSet,HashMap等散列存储结构中时，为对象提供哈希码，指定对象的存储位置*  
+>  
+> 若重写了equals(Object obj)方法，则必要重写hashCode()方法  
+>  
+> 一般一个类的对象如果会存储在HashTable，HashSet,HashMap等散列存储结构中，那么重写equals后需要也重写hashCode，否则会导致存储数据的不唯一性（存储了两个equals相等的数据）  
+> **对象放入散列集合的流程图**  
+> ![图片](./data/hash.gif)  
+> + hashCode是为了提高在散列结构存储中查找的效率，在线性表中没有作用  
+>  
+> + equals和hashCode需要同时覆盖  
+>  
+> + 若两个对象equals返回true，则hashCode有必要也返回相同的int数  
+>  
+> + 若两个对象equals返回false，则hashCode不一定返回不同的int数,但为不相等的对象生成不同hashCode值可以提高哈希表的性能  
+>  
+> + 若两个对象hashCode返回相同int数，则equals不一定返回true  
+>  
+> + 若两个对象hashCode返回不同int数，则equals一定返回false  
+>  
+> + 同一对象在执行期间若已经存储在集合中，则不能修改影响hashCode值的相关信息，否则会导致内存泄露问题  
 ## 泛型
 > 泛型：JDK5引入了泛型机制，泛型实现了参数化类型的概念，使代码可以应用于多种类型；由编译器来保证类型的正确性。  
 >  
