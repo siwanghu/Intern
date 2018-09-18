@@ -4,7 +4,7 @@
 >  
 > + 并行：同时处理多个任务  
 >  
-> + 同步：程序发出一个调用，在没有得到结果之前，该调用就不返回，程序阻塞。但是一旦调用返回，就得到返回值了  
+> + 同步：程序发出一个调用，在没有得到结果之前，该调用就不返回，程序阻塞。但是一旦调用返回，就得到返回值  
 >  
 > + 异步：程序发出一个调用，这个调用就直接返回了，没有返回结果。当一个异步过程调用发出后，调用者不会立刻得到结果。而是在调用发出后，被调用者通过状态、来通知调用者，或通过回调函数处理这个调用  
 >  
@@ -26,9 +26,9 @@
 >  
 > + 公平锁：多个线程按照申请锁的顺序来获取锁  
 >  
-> + 非公平锁：多个线程获取锁的顺序并不是按照申请锁的顺序，有可能后申请的线程比先申请的线程优先获取锁(Synchronized是一种非公平锁)  
+> + 非公平锁：多个线程获取锁的顺序并不是按照申请锁的顺序，有可能后申请的线程比先申请的线程优先获取锁(synchronized是一种非公平锁)  
 >  
-> + 可重入锁：在同一个线程在外层方法获取锁的时候，在进入内层方法会自动获取锁(Synchronized是一个可重入锁)  
+> + 可重入锁：在同一个线程在外层方法获取锁的时候，在进入内层方法会自动获取锁(synchronized是一个可重入锁)  
 >  
 > + 独享锁：指该锁一次只能被一个线程所持有  
 >  
@@ -99,6 +99,7 @@ LockSupport.parkUntil(timeout)
 >  
 > ![图片](./data/thread-state.png)  
 >  
+> *区别：进入waiting状态是线程主动的, 而进入blocked状态是被动的;相同点:都暂时停止线程的执行, 线程本身不会占用CPU时间片.区别是调用了sleep方法的线程直接受CPU调度, 而wait则是等待另外的java线程在持有同一个对象锁的同步块/方法中进行notify调用*  
 # Java线程创建  
 > + 继承Thread类  
 > + 实现Runable接口  
@@ -221,6 +222,8 @@ public class Piped {
 >  
 > + synchronized 只能是非公平锁  
 >  
+> ![图片](./data/lock.PNG)  
+>  
 > **Lock接口**  
 ```
 public interface Lock {
@@ -260,6 +263,47 @@ public interface ReadWriteLock {
      */
     Lock writeLock();
 }
+```  
+> **condition接口**  
+> Condition 将 Object 监视器方法（wait、notify 和 notifyAll）分解成截然不同的对象，以便通过将这些对象与任意 Lock 实现组合使用，为每个对象提供多个等待 set（wait-set）。其中，Lock 替代了 synchronized 方法和语句的使用，Condition 替代了 Object 监视器方法的使用  
+```
+ class BoundedBuffer {
+   final Lock lock = new ReentrantLock();
+   final Condition notFull  = lock.newCondition(); 
+   final Condition notEmpty = lock.newCondition(); 
+
+   final Object[] items = new Object[100];
+   int putptr, takeptr, count;
+
+   public void put(Object x) throws InterruptedException {
+     lock.lock();
+     try {
+       while (count == items.length) 
+         notFull.await();
+       items[putptr] = x; 
+       if (++putptr == items.length) putptr = 0;
+       ++count;
+       notEmpty.signal();
+     } finally {
+       lock.unlock();
+     }
+   }
+
+   public Object take() throws InterruptedException {
+     lock.lock();
+     try {
+       while (count == 0) 
+         notEmpty.await();
+       Object x = items[takeptr]; 
+       if (++takeptr == items.length) takeptr = 0;
+       --count;
+       notFull.signal();
+       return x;
+     } finally {
+       lock.unlock();
+     }
+   } 
+ }
 ```  
 # Java中的多线程同步手段  
 > + 同步方法  
