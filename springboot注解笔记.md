@@ -109,3 +109,10 @@ public boolean addVoice(Voice voice) {
     return voiceService.insertVoice(voice);
 }
 ```
+## **10.&nbsp;&nbsp;组件注解**  
+> + @Component注解放在类的头上,是所有受Spring 管理组件的通用形式,不推荐使用  
+>  
+> + @Service对应的是业务层Bean  
+>  
+> + @Repository对应数据访问层Bean  
+>  
