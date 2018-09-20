@@ -117,7 +117,7 @@ public boolean addVoice(Voice voice) {
 > + @Repository对应数据访问层Bean  
 >  
 ## **11.&nbsp;&nbsp;@Transactional**  
-> + 事务注解，添加在方法上，声明为事务  
+> + 事务注解，添加在方法或类上，声明为事务  
 >  
 > + 一般用于数据库操作函数中  
 ```
@@ -250,5 +250,19 @@ public interface BookDao extends JpaRepository<Book, Integer>{
     //本地sql语句查询
     @Query(value="select * from t_book order by RAND() limit ?1",nativeQuery=true)
     public List<Book> randomList(Integer n);
+}
+```  
+## **14.&nbsp;&nbsp;@ControllerAdvice与@ExceptionHandler**  
+> + 全局异常处理  
+>  
+> + 用于拦截服务器的异常  
+```
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(Exception.class)
+    public String handleException(){
+        return "Exception!";
+    }
 }
 ```
