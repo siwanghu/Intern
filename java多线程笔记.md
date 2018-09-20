@@ -149,6 +149,12 @@ public class CallableDemo {
 > + notify - 唤醒一个正在 wait 当前对象锁的线程，并让它拿到对象锁  
 >  
 > + notifyAll - 唤醒所有正在 wait 前对象锁的线程  
+>  
+> **notify与notifyAll的区别**  
+> + 唤醒在此对象监视器上等待的单个线程。如果所有线程都在此对象上等待，则会选择唤醒其中一个线程。选择是任意性的，并在对实现做出决定时发生  
+>  
+> + 唤醒在此对象监视器上等待的所有线程  
+>  
 > ## **管道**  
 > 主要用于线程之间的数据传输，而传输的媒介为内存. 4 种具体实现：PipedOutputStream、PipedInputStream、PipedReader 和 PipedWriter，前两种面向字节，而后两种面向字符  
 >  
