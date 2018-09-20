@@ -116,3 +116,139 @@ public boolean addVoice(Voice voice) {
 >  
 > + @Repository对应数据访问层Bean  
 >  
+## **11.&nbsp;&nbsp;@Transactional**  
+> + 事务注解，添加在方法上，声明为事务  
+>  
+> + 一般用于数据库操作函数中  
+```
+@Transactional
+public boolean checkVoiceById(int id,Stringcommit){
+    Voice voice=voiceDao.findById(id);
+    voice.setCommit(commit);
+    voiceDao.save(voice);
+    return true;
+}
+```  
+## **12.&nbsp;&nbsp;@Entity与@Table(name="tb_voice")**  
+> + @Entity声明持久化类  
+>  
+> + @Table声明表名  
+>  
+> + @Id声明表主键  
+>  
+> + @GeneratedValue(strategy= GenerationType.IDENTITY)声明表主键自动增长  
+>  
+> + @Column(nullable = false,name = "id")声明表字段的属性和名称  
+```
+@Entity
+@Table(name="tb_voice")
+public class Voice implements Serializable{
+    private static final long serialVersionUID = 2300044412175011558L;
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(nullable = false,name = "id")
+    private int id;
+
+    @Column(nullable = false , name = "name")
+    private String name;
+
+    @Column(nullable = false , name = "label")
+    private String label;
+
+    @Column(nullable = false , name = "datetime")
+    private Date datetime;
+
+    @Column(nullable = false , name = "uri")
+    private String uri;
+
+    @Column(nullable = false , name = "commit")
+    private String commit;
+
+    @Column(nullable = false , name = "size")
+    private String size;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public void setCommit(String commit) {
+        this.commit = commit;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public Date getDatetime() {
+        return datetime;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public String getCommit() {
+        return commit;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    @Override
+    public String toString() {
+        return "Voice{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", label='" + label + '\'' +
+                ", datetime=" + datetime +
+                ", uri='" + uri + '\'' +
+                ", commit='" + commit + '\'' +
+                ", size='" + size + '\'' +
+                '}';
+    }
+}
+```  
+## **13.&nbsp;&nbsp;@Query**  
+> + 用于springboot JPA中的自定义sql查询语句  
+```
+public interface BookDao extends JpaRepository<Book, Integer>{
+    
+    //Hql语句查询
+    @Query("select b from Book b where b.bookName like %?1%")
+    public List<Book> findByBookName(String bookName);
+    
+    //本地sql语句查询
+    @Query(value="select * from t_book order by RAND() limit ?1",nativeQuery=true)
+    public List<Book> randomList(Integer n);
+}
+```
