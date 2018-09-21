@@ -311,6 +311,68 @@ public interface ReadWriteLock {
    } 
  }
 ```  
+# Semaphore信号量  
+> Semaphore用来控制同时访问某个特定资源的操作数量，或者同时执行某个指定操作的数量  
+> **原理**：Semaphore管理着一组虚拟的许可（permit），permit的初始数量可通过构造方法来指定。每次执行acquire方法可以获取一个permit，如果没有就等待；而release方法可以释放一个permit  
+>  
+> + Semaphore 可以用于实现资源池，如数据库连接池  
+> + Semaphore 可以用于将任何一种容器变成有界阻塞容器  
+> Semaphore构造方法  
+```
+//初始化固定数量的 permit，并且默认为非公平模式
+public Semaphore(int permits) {}
+//初始化固定数量的 permit，第二个参数设置是否为公平模式。所谓公平，是指等待久的优先获取许可
+public Semaphore(int permits, boolean fair) {}
+```  
+> Semaphore的重要方法  
+```
+// 获取 1 个许可
+public void acquire() throws InterruptedException {}
+//获取 permits 个许可
+public void acquire(int permits) throws InterruptedException {}
+// 释放 1 个许可
+public void release() {}
+//释放 permits 个许可
+public void release(int permits) {}
+```  
+> 程序Demo  
+```
+public class SemaphoreDemo {
+
+    private static final int THREAD_COUNT = 30;
+
+    private static ExecutorService threadPool = Executors.newFixedThreadPool(THREAD_COUNT);
+
+    private static Semaphore s = new Semaphore(10);
+
+    public static void main(String[] args) {
+        for (int i = 0; i < THREAD_COUNT; i++) {
+            threadPool.execute(() -> {
+                try {
+                    s.acquire();
+                    System.out.println("save data");
+                    s.release();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+        threadPool.shutdown();
+    }
+}
+```
+# 区别  
+>  **Semaphore与Lock的区别**  
+> + Semaphore可以同时允许规定数量的线程执行  
+> + Lock对于不同的线程是互斥  
+> + Semaphore与Lock可以提供公平和不公平锁
+>  
+> **synchronized与Lock的区别**  
+> + synchronized 是Java 语言层面的，是内置的关键字  
+> + synchronized 同步的代码块可以由JVM自动释放  
+> + lock在性能上较好，切支持公平锁和非公平锁  
+> + 对于wait()方法，lock提供了condition可以提供更精确的临界区操作  
 # Java中的多线程同步手段  
 > + 同步方法  
 > + 同步代码块  
