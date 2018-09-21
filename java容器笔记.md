@@ -48,7 +48,8 @@
 > + Collections 类中提供的静态工厂方法创建的类（由 Collections.synchronizedXxxx 等方法）  
 >  
 > + 字符串处理上，StringBuilder是线程不安全的，而StringBuffer是线程安全的  
-> *未必。同步容器未必真的安全。在做复合操作时，仍然需要加锁来保护*  
+>  
+> *同步容器未必安全。在做复合操作(调用容器中的多个方法)时，仍然需要加锁来保护*  
 # 并发容器  
 > JDK 的 java.util.concurrent 包（即 juc）中提供了几个非常有用的并发容器  
 > + CopyOnWriteArrayList - 线程安全的 ArrayList  
