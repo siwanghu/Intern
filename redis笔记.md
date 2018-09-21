@@ -8,7 +8,7 @@
 > + Redis 支持数据的持久化（RDB快照和AOF日志）  
 >  
 > + Redis 支持数据的备份，即 master-slave 模式的数据备份  
-## Redis启动
+# Redis启动  
 > 启动Redis&nbsp;&nbsp;**redis-server.exe redis.windows.conf**  
 > 远程登陆&nbsp;&nbsp; **redis-cli.exe -h 127.0.0.1 -p 6379**  
 > 停止Redis&nbsp;&nbsp; **redis-cli.exe shutdown**  
