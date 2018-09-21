@@ -1,4 +1,14 @@
 # Redis远程字典服务器（siwang.hu&nbsp;&nbsp;V1.0）  
+> Redis是速度非常快的非关系型（NoSQL）内存键值数据库  
+# Redis优点  
+> + 性能极高，Redis 能读的速度是110000 次/s，写的速度是81000 次/s  
+>  
+> + Redis 的所有操作都是原子性的。单个操作是原子性的。多个操作也支持事务，即原子性，通过 MULTI 和 EXEC 指令包起来  
+>  
+> + Redis 支持数据的持久化（RDB快照和AOF日志）  
+>  
+> + Redis 支持数据的备份，即 master-slave 模式的数据备份  
+## Redis启动
 > 启动Redis&nbsp;&nbsp;**redis-server.exe redis.windows.conf**  
 > 远程登陆&nbsp;&nbsp; **redis-cli.exe -h 127.0.0.1 -p 6379**  
 > 停止Redis&nbsp;&nbsp; **redis-cli.exe shutdown**  
