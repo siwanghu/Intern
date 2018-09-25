@@ -48,6 +48,9 @@
 > **incr key**  
 > 如果key对应的值是整数形式,其value加1  
 > ***  
+> **setnx key value**  
+> 将 key 的值设为 value ，当且仅当 key 不存在。若给定的 key 已经存在，则 SETNX 不做任何动作。  
+> ***  
 > **incrby key increment**  
 > key对应的值是整数形式,其value加increment数  
 > ***  
