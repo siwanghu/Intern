@@ -375,7 +375,7 @@ public class SemaphoreDemo {
 > **synchronized与Lock的区别**  
 > + synchronized 是Java 语言层面的，是内置的关键字  
 > + synchronized 同步的代码块可以由JVM自动释放  
-> + lock在性能上较好，切支持公平锁和非公平锁  
+> + lock在性能上较好，支持公平锁和非公平锁  
 > + 对于wait()方法，lock提供了condition可以提供更精确的临界区操作  
 # Java中的多线程同步手段  
 > + 同步方法  
