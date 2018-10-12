@@ -1,4 +1,6 @@
 # SpringBoot注解（siwang.hu&nbsp;&nbsp;V1.0）  
+> [官方学习资料](https://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/reference/htmlsingle/)  
+>  
 ## **1.&nbsp;&nbsp;@SpringBootApplication**  
 > + 注解在启动类上  
 >  
@@ -266,5 +268,3 @@ public class GlobalExceptionHandler {
     }
 }
 ```  
-> [官方学习资料](https://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/reference/htmlsingle/)  
-> 

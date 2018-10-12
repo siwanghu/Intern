@@ -74,6 +74,8 @@
 >  
 > + **nohup command &**  
 > 如果使用nohup命令提交作业，那么在缺省情况下该作业的所有输出都被重定向到一个名为nohup.out的文件中，除非另外指定了输出文件：  
-> nohup command > myout.file 2>&1 &  
+> **nohup command > myout.file 2>&1 &**  
 > *在使用nohup命令后台运行命令之后，需要使用exit正常退出当前账户，这样才能保证命令一直在后台运行*  
+> + **netstat -nap**  
+> 查看端口常用与对应的进程id  
 > 

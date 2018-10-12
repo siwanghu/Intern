@@ -10,4 +10,7 @@
 > + 分布式消息传递  
 >  
 > SpringCloud可以快速地实现支持这些模式的服务和应用程序,并将在任何分布式环境中运行良好  
-> [学习资料](https://springcloud.cc/)  
+>  
+> + [学习资料](https://springcloud.cc/)  
+> + [demo例程](https://blog.csdn.net/forezp/article/details/70148833)  
+> 
