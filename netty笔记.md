@@ -49,5 +49,15 @@
 >  
 > + 由于Channel只负责实际的I/O操作，因此数据的编解码和实际处理都需要通过ChannelHandler进行处理  
 >  
+> + [参考例程](https://blog.csdn.net/yinbucheng/article/details/77053692)  
+>  
 > + ChannelPipeline是线程安全的，多个业务线程可以并发的操作ChannelPipeline；ChannelHandler不是线程安全的，用户需要自己保重ChannelHandler的线程安全  
-> 
+> ## ByteBuffer  
+> + 在Netty中并没有使用Java自带的ByteBuffer,而是自己实现提供了一个缓存区来用于标识一个字节序列，并帮助用户操作原始字节或者自定义的POJO  
+>  
+> + channel与对端的I/O读写都要操作Buffers。当有读操作时，把数据从内核区读取到用户区，当有写操作时，把数据从用户区写到内核区  
+>  
+> + ByteBuf是Netty的实现的最基本的数据缓冲，它包括Heap Buffer和Direct Buffer  
+>  
+> + ByteBuf实现了高级的功能和API，是Java NIO ByteBuffer更高级的封装和实现  
+>    
