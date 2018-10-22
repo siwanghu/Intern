@@ -11,6 +11,8 @@
 >  
 > + [demo例程](https://github.com/siwanghu/Netty)  
 >  
+> + [学习网站](https://waylau.com/netty-4-user-guide/Preface/The%20Problem.html)  
+>  
 ## Channel  
 > ![图片](./data/netty1.PNG)
 >  
@@ -60,4 +62,32 @@
 > + ByteBuf是Netty的实现的最基本的数据缓冲，它包括Heap Buffer和Direct Buffer  
 >  
 > + ByteBuf实现了高级的功能和API，是Java NIO ByteBuffer更高级的封装和实现  
->    
+> ## 业务代码  
+> + 耗时的业务代码放入自定义线程池去执行  
+>  
+> + 业务代码里面调用write方法，netty会把你要写出去的消息放入他的对接，然后依靠调度将消息写出去，你只需要write  
+>   
+> + Netty其实是允许在非NIO线程中写消息的。如果当前是在NIO线程，就直接写过去，如果不在NIO线程，写消息操作会被封装成一个task，然后再由NIO线程池来处理  
+```
+private void write(Object msg, boolean flush, ChannelPromise promise) {
+        AbstractChannelHandlerContext next = findContextOutbound();
+        final Object m = pipeline.touch(msg, next);
+        EventExecutor executor = next.executor();
+        if (executor.inEventLoop()) {
+            if (flush) {
+                next.invokeWriteAndFlush(m, promise);
+            } else {
+                next.invokeWrite(m, promise);
+            }
+        } else {
+            AbstractWriteTask task;
+            if (flush) {
+                task = WriteAndFlushTask.newInstance(next, m, promise);
+            }  else {
+                task = WriteTask.newInstance(next, m, promise);
+            }
+            safeExecute(executor, task, promise, m);
+        }
+    }
+```  
+> 
