@@ -62,6 +62,23 @@
 > + ByteBuf是Netty的实现的最基本的数据缓冲，它包括Heap Buffer和Direct Buffer  
 >  
 > + ByteBuf实现了高级的功能和API，是Java NIO ByteBuffer更高级的封装和实现  
+> ## EventLoop和EventLoopGroup  
+> ![图片](./data/netty5.PNG)  
+>  
+> + EventLoopGroup 负责为每个新创建的Channel 分配一个EventLoop。在当前实现中，
+使用顺序循环（round-robin）的方式进行分配以获取一个均衡的分布，并且相同的EventLoop
+可能会被分配给多个Channel  
+>  
+> + 一旦一个Channel 被分配给一个EventLoop，它将在它的整个生命周期中都使用这个
+EventLoop（以及相关联的Thread）。请牢记这一点，因为它可以使你从担忧你的Channel-
+Handler 实现中的线程安全和同步问题中解脱出来  
+>  
+> + 另外，需要注意的是，EventLoop 的分配方式对ThreadLocal 的使用的影响。因为一个
+EventLoop 通常会被用于支撑多个Channel，所以对于所有相关联的Channel 来说，
+ThreadLocal 都将是一样的。这使得它对于实现状态追踪等功能来说是个糟糕的选择。然而，
+在一些无状态的上下文中，它仍然可以被用于在多个Channel 之间共享一些重度的或者代价昂
+贵的对象，甚至是事件  
+>  
 > ## 业务代码  
 > + 耗时的业务代码放入自定义线程池去执行  
 >  
