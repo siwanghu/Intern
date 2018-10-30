@@ -13,6 +13,8 @@
 >  
 > + [学习网站](https://waylau.com/netty-4-user-guide/Preface/The%20Problem.html)  
 >  
+> + [学习资料](https://sylvanassun.github.io/2017/11/30/2017-11-30-netty_introduction/)  
+>  
 ## NIO  
 > NIO 提供了一个所有I/O 操作的全异步的实现。它利用了自NIO 子系统被引入JDK 1.4 时便
 可用的基于选择器的API。选择器背后的基本概念是充当一个注册表，在那里你将可以请求在Channel 的状态发生变化时得到通知。可能的状态变化有：  
@@ -72,6 +74,18 @@
 > + ByteBuf是Netty的实现的最基本的数据缓冲，它包括Heap Buffer和Direct Buffer  
 >  
 > + ByteBuf实现了高级的功能和API，是Java NIO ByteBuffer更高级的封装和实现  
+>  
+> 为了降低分配和释放内存的开销，Netty通过interface ByteBufAllocator 实现了
+（ByteBuf 的）池化，它可以用来分配我们所描述过的任意类型的ByteBuf 实例  
+>  
+> ![图片](./data/netty7.PNG)  
+>  
+> 使用静态Unpooled缓冲区  
+> ![图片](./data/netty8.PNG)  
+>  
+> 自从Netty 4开始，对象的生命周期由它们的引用计数（reference counts）管理，而不是由垃圾收集器（garbage collector）管理了。ByteBuf是最值得注意的，它使用了引用计数来改进分配内存和释放内存的性能。必须显示的使用:  
+>  
+> **ReferenceCountUtil.release(msg)** 接口释放不用的msg内存  
 > ## EventLoop和EventLoopGroup  
 > ![图片](./data/netty5.PNG)  
 >  
