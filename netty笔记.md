@@ -13,8 +13,18 @@
 >  
 > + [学习网站](https://waylau.com/netty-4-user-guide/Preface/The%20Problem.html)  
 >  
+## NIO  
+> NIO 提供了一个所有I/O 操作的全异步的实现。它利用了自NIO 子系统被引入JDK 1.4 时便
+可用的基于选择器的API。选择器背后的基本概念是充当一个注册表，在那里你将可以请求在Channel 的状态发生变化时得到通知。可能的状态变化有：  
+> + 新的Channel 已被接受并且就绪OP_ACCEPT  
+> + Channel 连接已经完成OP_CONNECT  
+> + Channel 有已经就绪的可供读取的数据OP_READ  
+> + Channel 可用于写数据OP_WRITE  
+>  
+> ![图片](./data/netty6.PNG)  
+>  
 ## Channel  
-> ![图片](./data/netty1.PNG)
+> ![图片](./data/netty1.PNG)  
 >  
 > Channel是Netty的核心概念之一，它是Netty网络通信的主体，由它负责同对端进行网络通信、注册和数据操作等功能  
 > + 一旦用户端连接成功，将新建一个channel同该用户端进行绑定  
