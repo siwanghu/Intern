@@ -41,7 +41,7 @@
 >  
 > ![图片](./data/netty2.PNG)  
 >  
-> ## ChannelPipeline和ChannelHandler  
+## ChannelPipeline和ChannelHandler  
 > + ChannelPipeline和ChannelHandler用于channel事件的拦截和处理  
 >  
 > + Netty使用类似责任链的模式来设计ChannelPipeline和ChannelHandler  
@@ -52,7 +52,7 @@
 >  
 > + inbound:当发生某个I/O操作时由IO线程流向用户业务处理线程的事件，如链路建立、链路关闭或者读完成等  
 > + outbound:由用户线程或者代码发起的IO操作事件  
-> ## ChannelHandlerContext  
+## ChannelHandlerContext  
 > + 每个ChannelHandler 被添加到ChannelPipeline 后，都会创建一个ChannelHandlerContext 并与之创建的ChannelHandler 关联绑定  
 >  
 > + ChannelHandler通过ChannelHandlerContext来操作channel和channelpipeline  
@@ -66,7 +66,7 @@
 > + [参考例程](https://blog.csdn.net/yinbucheng/article/details/77053692)  
 >  
 > + ChannelPipeline是线程安全的，多个业务线程可以并发的操作ChannelPipeline；ChannelHandler不是线程安全的，用户需要自己保重ChannelHandler的线程安全  
-> ## ByteBuffer  
+## ByteBuffer  
 > + 在Netty中并没有使用Java自带的ByteBuffer,而是自己实现提供了一个缓存区来用于标识一个字节序列，并帮助用户操作原始字节或者自定义的POJO  
 >  
 > + channel与对端的I/O读写都要操作Buffers。当有读操作时，把数据从内核区读取到用户区，当有写操作时，把数据从用户区写到内核区  
@@ -86,7 +86,7 @@
 > 自从Netty 4开始，对象的生命周期由它们的引用计数（reference counts）管理，而不是由垃圾收集器（garbage collector）管理了。ByteBuf是最值得注意的，它使用了引用计数来改进分配内存和释放内存的性能。必须显示的使用:  
 >  
 > **ReferenceCountUtil.release(msg)** 接口释放不用的msg内存  
-> ## EventLoop和EventLoopGroup  
+## EventLoop和EventLoopGroup  
 > ![图片](./data/netty5.PNG)  
 >  
 > + EventLoopGroup 负责为每个新创建的Channel 分配一个EventLoop。在当前实现中，
@@ -103,7 +103,7 @@ ThreadLocal 都将是一样的。这使得它对于实现状态追踪等功能�
 在一些无状态的上下文中，它仍然可以被用于在多个Channel 之间共享一些重度的或者代价昂
 贵的对象，甚至是事件  
 >  
-> ## 业务代码  
+## 业务代码  
 > + 耗时的业务代码放入自定义线程池去执行  
 >  
 > + 业务代码里面调用write方法，netty会把你要写出去的消息放入他的对接，然后依靠调度将消息写出去，你只需要write  
