@@ -194,3 +194,119 @@ var vm = new Vue({
 })
 ```
 > + watch和computed可以从缓存中读数据，性能较好，只要相关数据没有改变就不执行；方法性能不好，只要页面数据有改变，方法就会执行。对于某种功能，三者都能实现读情况下，优先选computed  
+## 添加组件  
+> + 在vue-cli组件配置与使用分为：引入组件、注册组件、使用组件  
+> + main.js是整个项目的入口文件,在src文件夹下,import引入vue和根组件app.vue,最后new Vue，启动应用
+> + 自己定义的组件Hello.vue一般放到components目录下  
+> + 父组件引入子组件，注册组件，使用组件  
+```
+第一步：在components目录下建立Hello.vue文件
+<template>
+  <div>
+      {{message}}
+  </div>
+</template>
+
+<script>
+export default{
+  data(){
+    return{
+      message:"hello",
+    }
+  }
+}
+</script>
+
+第二步：在需要使用的子组件的地方中注册与使用组件
+<template>
+  <div>
+      <abc></abc>   //使用组件
+  </div>
+</template>
+
+<script>
+import Hello from "./components/Hello"   //导入子组件
+export default{
+  components:{      //注册组件
+    abc:Hello
+  }
+  data(){
+    return{
+      message:"hello",
+    }
+  }
+}
+</script>
+```
+## 使用vue-router  
+> + 需要使用cnpm安装vue-router  
+> + 在src/router/index.js中定义路由  
+```
+import Vue from 'vue'
+import Router from 'vue-router'
+import Hello from '../components/Hello'   //首页
+import Test from '../components/test'    //需要跳转的页面 给组件重新命名
+ 
+Vue.use(Router)
+ 
+export default new Router({
+  routes: [
+    {        //首页
+      path: '/',
+      name: 'Hello',
+      component: Hello
+    },
+    {        //需要跳转的页面
+        path:'/test',
+        name:'test',
+        component:Test    //组件名字
+    }
+  ]
+})
+```
+> + 在app.vue中配置路由  
+```
+<template>
+  <div id="app">
+    <img src="./assets/logo.png">
+    <p>
+    <router-link to="/home">home</router-link>//跳转首页
+    <router-link to="/test">test</router-link>//跳转新页面
+    </p>
+    <router-view></router-view>//页面渲染放置的部分
+  </div>
+</template>
+ 
+<script>
+export default {
+  name: 'app'
+}
+</script>
+ 
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
++ 配置main.js  
+```
+import Vue from 'vue'
+import App from './App'
+import router from './router'
+ 
+Vue.config.productionTip = false
+ 
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  router,
+  template: '<App/>',
+  components: { App }
+}).$mount('#app')//实例挂载到元素中
+```
