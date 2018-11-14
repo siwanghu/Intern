@@ -1,4 +1,4 @@
-# vue笔记（siwang.hu&nbsp;&nbsp;V1.0）  
+# vue基础笔记（siwang.hu&nbsp;&nbsp;V1.0）  
 > + 官方学习[网站](https://cn.vuejs.org/v2/guide/)  
 ## v-if&nbsp;指令  
 > + 条件渲染指令  
