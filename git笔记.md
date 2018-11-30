@@ -12,4 +12,8 @@
 >  
 > + **ssh-keygen -t rsa -C "youremail@example.com"** 配置github公钥  
 >  
-> + 在~/下生成.ssh文件夹，打开id_rsa.pub，复制里面的key。到github 上，进入 Account => Settings，配置公钥
+> + 在~/下生成.ssh文件夹，打开id_rsa.pub，复制里面的key。到github 上，进入 Account => Settings，配置公钥  
+## 版本提交  
+> **git add -A** 将所有文件的改动添加到提交仓库中  
+> **git add filename** 将指定文件名的文件改动添加到提交仓库中  
+> **git commit -m "message"** 提交所有改动
