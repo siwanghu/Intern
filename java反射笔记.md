@@ -3,7 +3,7 @@
 >  
 > + 通过Java的反射机制使得我们可以在程序运行时动态的加载、探索以及使用编译期间完全未知的 .class文件。Java程序可以加载一个运行时才得知名称的.class 文件，然后获悉其完整构造，并生成其对象实体、或对其 fields（变量）设值、或调用其 methods（方法）  
 >  
-> + Java的反射机制的实现要借助于4个类：Class，Constructor，Field，Method，Array;
+> + Java的反射机制的实现要借助于：Class，Constructor，Field，Method，Array;
 ## Class类  
 > + 在Java中，通过Class类获取到任何一个类中完整的信息  
 >  
@@ -224,6 +224,6 @@ public static void testArray() throws Exception {
     //获取某一项的内容
     System.out.println(Array.get(array,3));
 
-    
+
 }
 ```
