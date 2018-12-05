@@ -100,7 +100,7 @@ static Object newProxyInstance(ClassLoader loader,
 // 第一个参数既是代理类实例，第二个参数是被调用的方法对象
 // 第三个方法是调用参数
 Object invoke(Object proxy, Method method, Object[] args)
-```  
+```
 >  
 > ### 创建动态代理对象 
 ```
@@ -225,7 +225,7 @@ public class App {
         Subject proxy = (Subject)new ProxyFactory(target).getProxyInstance();
 
         //执行代理对象的方法
-        proxy.save();
+        proxy.request();
     }
 }
 ```
