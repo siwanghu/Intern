@@ -38,7 +38,7 @@ s1 += 1;
 ```  
 > +=是java语言中的运算符，Java编译器会对它特殊处理进行正确的编译  
 > 
-# equals与hashcode  
+## equals与hashcode  
 > + equals方法用于比较两个对象是否相等，比较的是对象的值(==比较的是对象引用)  
 > + hashcode方法为对象生成唯一的哈希码  
 >  
@@ -62,6 +62,46 @@ s1 += 1;
 > + 若两个对象hashCode返回不同int数，则equals一定返回false  
 >  
 > + 同一对象在执行期间若已经存储在集合中，则不能修改影响hashCode值的相关信息，否则会导致内存泄露问题  
+## new与clone  
+> 在Java中对象直接赋值操作，只是将一个对象的引用复制给赋值对象，两个对象指向的是堆中相同的内存  
+```
+Apple apple1 = new Apple();
+Apple apple2 = apple1;
+```
+> apple2的创建并没有在堆中生成新对象，apple1与apple2指向堆中相同的内存，对apple1中的属性修改也会影响到apple2  
+>  
+> new与clone可以实现在堆中分配内存创建对象，但是new可以完全分配对象的内存，意思是如果new的对象内部属性有对象引用，它的属性也会分配内存。相反，clone则是只创建对象本身的内存大小，包含基本数据类型的属性，clone对象的中的对象引用属性只是复制一个引用过来  
+>  
+> **clone是浅拷贝**  
+>  
+> **如果想要深拷贝一个对象， 这个对象必须要实现Cloneable接口，实现clone方法，并且在clone方法内部，把该对象引用的其他对象也要clone一份 ， 这就要求这个被引用的对象必须也要实现Cloneable接口并且实现clone方法。**  
+```
+//Color也要实现Cloneable接口
+//要不然color.clone();执行的也是浅拷贝
+class Apple implements Cloneable{
+	public Color color;
+	public Apple() {}
+	public Apple(Color color) {this.color = color;}
+ 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		Apple newApple =  (Apple) super.clone();
+		newApple.color = (Color) color.clone();
+		return newApple;
+	}	
+}
+```
+## final  
+> + 当用final修饰一个类时，表明这个类不能被继承  
+> final类中的成员变量可以根据需要设为final，但是要注意final类中的所有成员方法都会被隐式地指定为final方法  
+>  
+> + 使用final修饰方法  
+> 第一个原因是把方法锁定，以防任何继承类修改它的含义；第二个原因是效率。在早期的Java实现版本中，会将final方法转为内嵌调用。但是如果方法过于庞大，可能看不到内嵌调用带来的任何性能提升。在最近的Java版本中，不需要使用final方法进行这些优化了,**类的private方法会隐式地被指定为final方法**  
+>  
+> + 使用final修饰变量  
+> 对于一个final变量，如果是基本数据类型的变量，则其数值一旦在初始化之后便不能更改；如果是引用类型的变量，则在对其初始化之后便不能再让其指向另一个对象  
+>  
+> + Java函数调用使用值传递，用final修饰函数参数**无法禁止**函数内部对参数进行修改  
 ## 泛型
 > 泛型：JDK5引入了泛型机制，泛型实现了参数化类型的概念，使代码可以应用于多种类型；由编译器来保证类型的正确性。  
 >  
