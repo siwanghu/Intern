@@ -148,7 +148,8 @@ public class Jna
     {
         System.load("Lib.dll");
         try {
-            TestJNA instance = (TestJNA) Native.loadLibrary("Lib",                                        TestJNA.class);
+            TestJNA instance = (TestJNA) Native.loadLibrary("Lib", 
+                     TestJNA.class);
             System.out.println(instance.add(6, 77));
         } catch (Exception e) {
             System.out.println(e.getMessage());
