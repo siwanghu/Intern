@@ -16,7 +16,9 @@
 >  
 > + Authorization server：认证服务器，即服务提供商专门用来处理认证的服务器  
 >  
-> + User Agent：用户代理，第三方端软件
+> + User Agent：用户代理，第三方端软件  
+>  
+> + access_token：用户访问api权限token，拥有指定有效时间  
 ## 密码模式  
 > + client如果是自家的应用，可以使用密码模式完成对client的授权  
 >  
@@ -37,7 +39,7 @@
 >  
 > + 在Headers中填写Authorization=Basic Y2xpZW50OmNsaWVudA==字段（Basic后面有一个空格，然后在加上加密串）  
 >  
-> + Y2xpZW50OmNsaWVudA==值是client_id:client_secret的base64编码值  
+> + Y2xpZW50OmNsaWVudA==值是**client_id:client_secret**的base64编码值  
 >  
 > + client_id与client_secret是auth服务器分配给客户端的client账号与secret密码  
 >  
@@ -92,6 +94,33 @@ grant_type=password&username=ws&password=ws
 ## 客户端模式  
 > + 这种模式直接根据client的id和密钥即可获取token，无需用户参与  
 >  
-> + 这种模式比较合适消费api的后端服务
+> + 这种模式比较合适消费api的后端服务  
 >  
 > + 不支持refresh token  
+>  
+> **postman发送post请求**  
+> ![图片](./data/cpp.PNG)  
+>  
+> + 在postman中选择请求格式为post  
+>  
+> + 填写请求的服务器地址127.0.0.1:8088/uaa/oauth/token  
+>  
+> + 在Headers中填写Authorization=Basic cmVnaXN0ZXI6cmVnaXN0ZXI=字段（Basic后面有一个空格，然后在加上加密串）  
+>  
+> + cmVnaXN0ZXI6cmVnaXN0ZXI=值是**client_id:client_secret**的base64编码值  
+>  
+> + client_id与client_secret是auth服务器分配给客户端的client账号与secret密码  
+>  
+> ![图片](./data/cpp1.PNG)  
+>  
+> + 在Body中填写grant_type为client_credentials，无需用户填写账号和密码
+>  
+> **auth服务器返回access_token** 
+```
+{
+  "access_token": "fae28c9a-3e5f-4904-b534-89100152a288",
+  "token_type": "bearer",
+  "expires_in": 43094,
+  "scope": "xx"
+}
+```
