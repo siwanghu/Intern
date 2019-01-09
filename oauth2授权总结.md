@@ -8,7 +8,9 @@
 >  
 > + 客户端模式  
 >  
-> [参考资料](https://www.kancloud.cn/kancloud/oauth_2_0/63331)
+> [参考资料](https://www.kancloud.cn/kancloud/oauth_2_0/63331)  
+>  
+> [Demo代码](https://github.com/siwanghu/Security)  
 ## 协议参与者名称  
 > + Resource Owner：资源所有者，实际用户(user)  
 >  
